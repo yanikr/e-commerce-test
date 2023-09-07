@@ -47,4 +47,7 @@ export const CartMenuButton = styled(Button)`
   min-width: 100%;
   padding: 20px 40px;
   margin: 20px 0;
+  &:hover {
+    color: black;
+  }
 `;
