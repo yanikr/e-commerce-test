@@ -1,11 +1,16 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { shades } from "../theme";
-import { addToCart, decreaseCount, increaseCount } from "../state/state";
+import { addToCart } from "../state/state";
 import { useNavigate } from "react-router-dom";
+import {
+  ItemHoveredCardWrap,
+  ItemHoveredButtonsWrap,
+  ItemAddToCartButton,
+} from "./Item.styled";
 
 export const Item = ({ item, width }) => {
   const navigate = useNavigate();
@@ -40,21 +45,9 @@ export const Item = ({ item, width }) => {
           onClick={() => navigate(`/item/${item.id}`)}
           style={{ cursor: "pointer" }}
         />
-        <Box
-          display={isHovered ? "block" : "none"}
-          position="absolute"
-          bottom="10%"
-          left="0"
-          width="100%"
-          padding="0 5%"
-        >
+        <ItemHoveredCardWrap display={isHovered ? "block" : "none"}>
           <Box display="flex" justifyContent="space-between">
-            <Box
-              display="flex"
-              alignItems="center"
-              backgroundColor={shades.neutral[100]}
-              borderRadius="3px"
-            >
+            <ItemHoveredButtonsWrap>
               <IconButton onClick={() => setCount(Math.max(count - 1, 1))}>
                 <RemoveIcon />
               </IconButton>
@@ -62,15 +55,14 @@ export const Item = ({ item, width }) => {
               <IconButton onClick={() => setCount(count + 1)}>
                 <AddIcon />
               </IconButton>
-            </Box>
-            <Button
+            </ItemHoveredButtonsWrap>
+            <ItemAddToCartButton
               onClick={() => dispatch(addToCart({ item: { ...item, count } }))}
-              sx={{ backgroundColor: shades.primary[300], color: "white" }}
             >
               Add to Cart
-            </Button>
+            </ItemAddToCartButton>
           </Box>
-        </Box>
+        </ItemHoveredCardWrap>
       </Box>
       <Box mt="3px">
         <Typography variant="subtitle2" color={neutral.dark}>
